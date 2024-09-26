@@ -6,12 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0006_doctor_patients_doctor_phone_number'),
+        ("core", "0006_doctor_patients_doctor_phone_number"),
     ]
 
     operations = [
         migrations.AddConstraint(
-            model_name='doctorclinicaffiliation',
-            constraint=models.UniqueConstraint(fields=('doctor', 'clinic'), name='unique_affiliation'),
+            model_name="doctorclinicaffiliation",
+            constraint=models.UniqueConstraint(
+                fields=("doctor", "clinic"), name="unique_affiliation"
+            ),
         ),
     ]

@@ -7,23 +7,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0003_country_state_city'),
+        ("core", "0003_country_state_city"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='clinic',
-            name='city',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.city'),
+            model_name="clinic",
+            name="city",
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="core.city"
+            ),
         ),
         migrations.AddField(
-            model_name='clinic',
-            name='country',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.country'),
+            model_name="clinic",
+            name="country",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="core.country",
+            ),
         ),
         migrations.AddField(
-            model_name='clinic',
-            name='state',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.state'),
+            model_name="clinic",
+            name="state",
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.SET_NULL, to="core.state"
+            ),
         ),
     ]

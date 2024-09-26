@@ -9,11 +9,13 @@ class AddPatientView(generics.CreateAPIView):
     serializer_class = PatientSerializer
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]  # Permissions
 
+
 # Add a new doctor (CBV)
 class AddDoctorView(generics.CreateAPIView):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+
 
 # Add a new clinic (CBV)
 class AddClinicView(generics.CreateAPIView):
@@ -21,9 +23,10 @@ class AddClinicView(generics.CreateAPIView):
     serializer_class = ClinicSerializer
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
+
 # Get clinic information (CBV)
 class GetClinicView(generics.RetrieveAPIView):
     queryset = Clinic.objects.all()
     serializer_class = ClinicSerializer
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
-    lookup_field = 'id'
+    lookup_field = "id"

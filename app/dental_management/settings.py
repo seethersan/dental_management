@@ -20,16 +20,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", default="django-insecure-#7w0j6n&8bqgj+^w6g4j&@)z7nq8z6q5m4@&$8@!@^_q7b7@_c")
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    default="django-insecure-#7w0j6n&8bqgj+^w6g4j&@)z7nq8z6q5m4@&$8@!@^_q7b7@_c",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"
 
-AUTHENTICATION_BACKENDS = ['users.backends.EmailBackend']
+AUTHENTICATION_BACKENDS = ["users.backends.EmailBackend"]
 
 
 # Application definition
@@ -41,11 +44,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'rest_framework',
-    'drf_yasg',
-    'core',
-    'users',
-    'api',
+    "rest_framework",
+    "drf_yasg",
+    "core",
+    "users",
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -81,8 +84,8 @@ WSGI_APPLICATION = "dental_management.wsgi.application"
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
 
@@ -144,7 +147,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

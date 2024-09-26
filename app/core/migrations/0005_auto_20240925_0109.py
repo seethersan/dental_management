@@ -4,7 +4,7 @@ from django.db import migrations
 
 
 def create_predefined_procedures(apps, schema_editor):
-    Procedure = apps.get_model('core', 'Procedure')  # Replace 'core' with your app name
+    Procedure = apps.get_model("core", "Procedure")  # Replace 'core' with your app name
 
     # Predefined list of procedures
     predefined_procedures = [
@@ -19,11 +19,12 @@ def create_predefined_procedures(apps, schema_editor):
     for procedure_name in predefined_procedures:
         Procedure.objects.get_or_create(name=procedure_name)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
         # Add the most recent migration this depends on
-        ('core', '0004_clinic_city_clinic_country_clinic_state'),
+        ("core", "0004_clinic_city_clinic_country_clinic_state"),
     ]
 
     operations = [
