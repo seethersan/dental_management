@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load form_filters %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add New Visit for {{ patient.user.get_full_name }}</h2>
+
+    <form method="POST" id="visit-form">
+        {% csrf_token %}
+
+        <!-- Clinic Field -->
+        <div class="mb-3">
+            <label for="id_clinic" class="form-label">Clinic</label>
+            {{ form.clinic|add_class:"form-select" }}
+        </div>
+
+        <!-- Doctor Field (Will be dynamically populated) -->
+        <div class="mb-3">
+            <label for="id_doctor" class="form-label">Doctor</label>
+            <select id="id_doctor" name="doctor" class="form-select" disabled></select>
+        </div>
+
+        <!-- Time Slots Field (Will be dynamically populated) -->
+        <div class="mb-3">
+            <label for="id_visit_date" class="form-label">Visit Date and Time</label>
+            <select id="id_visit_date" name="visit_date" class="form-select" disabled></select>
+        </div>
+
+        <!-- Procedures Field (Will be dynamically populated) -->
+        <div class="mb-3">
+            <label for="id_procedures_done" class="form-label">Procedures Done</label>
+            <div id="procedures-container" class="form-check"></div>
+        </div>
+
+        <!-- Doctor's Notes -->
+        <div class="mb-3">
+            <label for="id_doctor_notes" class="form-label">Doctor's Notes</label>
+            {{ form.doctor_notes|add_class:"form-control" }}
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Save Visit</button>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/visit.js' %}"></script>
+
+{% endblock %}

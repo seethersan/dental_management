@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load form_filters %} 
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-center">Create Doctor Affiliation for {{ clinic.name }}</h2>
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <ul>
+                                    {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Doctor Dropdown -->
+                        <div class="form-group mb-3">
+                            <label for="id_doctor" class="form-label">Doctor:</label>
+                            {{ form.doctor|add_class:"form-control" }}
+                            {% if form.doctor.errors %}
+                                <div class="text-danger">
+                                    {{ form.doctor.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Office Address -->
+                        <div class="form-group mb-3">
+                            <label for="id_office_address" class="form-label">Office address:</label>
+                            {{ form.office_address|add_class:"form-control" }}
+                            {% if form.office_address.errors %}
+                                <div class="text-danger">
+                                    {{ form.office_address.errors.as_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <input type="hidden" id="id_working_schedule" name="working_schedule" value="{{ working_schedule }}">
+                        {% if form.working_schedule.errors %}
+                            <div class="text-danger">
+                                {{ form.working_schedule.errors.as_text }}
+                            </div>
+                        {% endif %}
+
+                        <!-- FullCalendar for Working Schedule -->
+                        <div id="calendar" class="mt-4 mb-4"></div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-100 mt-4">Save Affiliation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FullCalendar resources -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<!-- Add FullCalendar Initialization Script -->
+<script src="{% static 'js/calendar.js' %}"></script>
+{% endblock %}

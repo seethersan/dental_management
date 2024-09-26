@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Patients List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Patients List</h2>
+
+    <!-- Only show the button if the user is logged in and is a staff member -->
+    {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'patient-create' %}" class="btn btn-primary mb-3">Create New Patient</a>
+    {% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Last Visit Date</th>
+                <th>Last Visit Doctor</th>
+                <th>Last Visit Procedures</th>
+                <th>Next Appointment Date</th>
+                <th>Next Appointment Doctor</th>
+                <th>Next Appointment Procedure</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.user.first_name }} {{ patient.user.last_name }}</td>
+                <td>{{ patient.date_of_birth }}</td>
+                <td>{% if patient.last_visit %}{{ patient.last_visit.date }}{% else %}N/A{% endif %}</td>
+                <td>{% if patient.last_visit %}{{ patient.last_visit.doctor.name }}{% else %}N/A{% endif %}</td>
+                <td>{% if patient.last_visit %}{% for procedure in patient.last_visit.procedures.all %}{{ procedure.name }}{% endfor %}{% else %}N/A{% endif %}</td>
+                <td>{% if patient.next_appointment %}{{ patient.next_appointment.appointment_date }}{% else %}N/A{% endif %}</td>
+                <td>{% if patient.next_appointment %}{{ patient.next_appointment.doctor.name }}{% else %}N/A{% endif %}</td>
+                <td>{% if patient.next_appointment %}{{ patient.next_appointment.procedure.name }}{% else %}N/A{% endif %}</td>
+                <td>
+                    <a href="{% url 'patient-detail' patient.id %}" class="btn btn-info">View Details</a>
+                    <a href="{% url 'patient-update' patient.id %}" class="btn btn-warning">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9">No patients found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load form_filters %} 
+
+{% block title %}Create New Patient{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create New Patient</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- User fields -->
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Username:</label>
+                            {{ form.username }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_first_name" class="form-label">First Name:</label>
+                            {{ form.first_name }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_last_name" class="form-label">Last Name:</label>
+                            {{ form.last_name }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email:</label>
+                            {{ form.email }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">Password:</label>
+                            {{ form.password }}
+                        </div>
+
+                        <!-- Patient fields -->
+                        <div class="mb-3">
+                            <label for="id_date_of_birth" class="form-label">Date of Birth:</label>
+                            {{ form.date_of_birth }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_address" class="form-label">Address:</label>
+                            {{ form.address }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_phone_number" class="form-label">Phone Number:</label>
+                            {{ form.phone_number }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_ssn_last_four" class="form-label">SSN (Last Four):</label>
+                            {{ form.ssn_last_four }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_gender" class="form-label">Gender:</label>
+                            {{ form.gender|add_class:"form-select" }}
+                        </div>
+
+                        <!-- Submit button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Create Patient</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Patient Details</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4>Personal Information</h4>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item"><strong>First Name:</strong> {{ patient.user.first_name }}</li>
+                        <li class="list-group-item"><strong>Last Name:</strong> {{ patient.user.last_name }}</li>
+                        <li class="list-group-item"><strong>Email:</strong> {{ patient.user.email }}</li>
+                        <li class="list-group-item"><strong>Username:</strong> {{ patient.user.username }}</li>
+                    </ul>
+
+                    <h4>Patient Information</h4>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item"><strong>Date of Birth:</strong> {{ patient.date_of_birth }}</li>
+                        <li class="list-group-item"><strong>Address:</strong> {{ patient.address }}</li>
+                        <li class="list-group-item"><strong>Phone Number:</strong> {{ patient.phone_number }}</li>
+                        <li class="list-group-item"><strong>SSN (Last Four):</strong> {{ patient.ssn_last_four }}</li>
+                        <li class="list-group-item"><strong>Gender:</strong> {{ patient.get_gender_display }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Next Appointment Section -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4>Next Appointment</h4>
+                    {% if next_appointment %}
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item"><strong>Date:</strong> {{ next_appointment.appointment_date }}</li>
+                            <li class="list-group-item"><strong>Doctor:</strong> {{ next_appointment.doctor.user.get_full_name }}</li>
+                            <li class="list-group-item"><strong>Clinic:</strong> {{ next_appointment.clinic.name }}</li>
+                            <li class="list-group-item"><strong>Procedure:</strong> {{ next_appointment.procedure.name }}</li>
+                        </ul>
+                    {% else %}
+                        <p>No upcoming appointments.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Visit History Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Visit History</h4>
+                    {% if visits %}
+                        {% for visit in visits %}
+                            <p><strong>Date:</strong> {{ visit.date }}</p>
+                            <p><strong>Doctor:</strong> {{ visit.doctor.user.get_full_name }}</p>
+                            <p><strong>Clinic:</strong> {{ visit.clinic.name }}</p>
+                            <p><strong>Procedure:</strong> {{ visit.procedures_done.all|join:", " }}</p>
+                            <p><strong>Doctor's Notes:</strong> {{ visit.doctor_notes }}</p>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>No visit history available.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-start mt-3">
+                <a href="{% url 'add-visit' patient.id %}" class="btn btn-primary me-2">Add New Visit</a>
+                <a href="{% url 'schedule-appointment' patient.id %}" class="btn btn-primary">Schedule Appointment</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

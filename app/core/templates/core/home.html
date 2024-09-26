@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Dental Management Platform{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <section class="text-center py-5 bg-light">
+        <h1 class="display-4">Welcome to the Dental Management Platform</h1>
+        <p class="lead mt-3">Simplifying clinic, doctor, and patient management with ease and efficiency.</p>
+        <a href="#features" class="btn btn-primary btn-lg mt-3">Explore Our Features</a>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <h2 class="text-center mb-4">Why Choose Us?</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <h4>Manage Clinics</h4>
+                    <p>Efficiently manage multiple clinics, track appointments, and maintain records in one place.</p>
+                    <a href="#clinics" class="btn btn-outline-primary">Manage Clinics</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <h4>Oversee Doctors</h4>
+                    <p>Track doctor availability, specialties, and work schedules effortlessly.</p>
+                    <a href="#doctors" class="btn btn-outline-primary">Manage Doctors</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <h4>Maintain Patient Records</h4>
+                    <p>Ensure up-to-date patient records and easily manage appointments and treatment history.</p>
+                    <a href="#patients" class="btn btn-outline-primary">Manage Patients</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!-- core/templates/core/doctor_detail.html -->
+{% extends "base.html" %}
+
+{% block title %}Doctor Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Doctor Details: {{ doctor.name }}</h2>
+    <a href="{% url 'doctor-update' doctor.id %}" class="btn btn-primary mb-3">Edit Doctor Information</a>
+
+    <table class="table">
+        <tr>
+            <th>NPI:</th>
+            <td>{{ doctor.npi }}</td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td>{{ doctor.user.email }}</td>
+        </tr>
+        <tr>
+            <th>First name:</th>
+            <td>{{ doctor.user.first_name }}</td>
+        </tr>
+        <tr>
+            <th>Last aname:</th>
+            <td>{{ doctor.user.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number:</th>
+            <td>{{ doctor.phone_number }}</td>
+        </tr>
+        <tr>
+            <th>Specialties:</th>
+            <td>
+                {% for specialty in doctor.specialties.all %}
+                    {{ specialty.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+    <h3>Affiliated Clinics</h3>
+    <ul>
+        {% for clinic in doctor.clinics.all %}
+        <li>{{ clinic.name }} - {{ clinic.address }}</li>
+        {% empty %}
+        <li>No affiliated clinics.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Affiliated Patients</h3>
+    <ul>
+        {% for patient in doctor.patients.all %}
+        <li>{{ patient.name }} - {{ patient.email }}</li>
+        {% empty %}
+        <li>No affiliated patients.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

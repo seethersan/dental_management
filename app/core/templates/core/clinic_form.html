@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load form_filters %} 
+
+{% block title %}Add New Clinic{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Add New Clinic</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-3">
+                            <label for="id_name">Name:</label>
+                            {{ form.name|add_class:"form-control" }}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_address">Address:</label>
+                            {{ form.address|add_class:"form-control" }}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_phone_number">Phone number:</label>
+                            {{ form.phone_number|add_class:"form-control" }}
+                        </div>
+
+                        <!-- Dropdown for Country -->
+                        <div class="form-group mb-3">
+                            <label for="id_country">Country:</label>
+                            {{ form.country|add_class:"form-control" }}
+                        </div>
+
+                        <!-- Dropdown for State -->
+                        <div class="form-group mb-3">
+                            <label for="id_state">State:</label>
+                            {{ form.state|add_class:"form-control" }}
+                        </div>
+
+                        <!-- Dropdown for City -->
+                        <div class="form-group mb-3">
+                            <label for="id_city">City:</label>
+                            {{ form.city|add_class:"form-control" }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Save Clinic</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/dynamic_locations.js' %}"></script>
+{% endblock %}

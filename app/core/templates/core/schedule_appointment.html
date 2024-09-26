@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Schedule Appointment for {{ patient.user.get_full_name }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Procedure Field -->
+        <div class="mb-3">
+            <label for="id_procedure" class="form-label">Procedure</label>
+            {{ form.procedure }}
+        </div>
+
+        <!-- Clinic Field (Dynamic) -->
+        <div class="mb-3">
+            <label for="id_clinic" class="form-label">Clinic</label>
+            {{ form.clinic }}
+        </div>
+
+        <!-- Doctor Field (Dynamic) -->
+        <div class="mb-3">
+            <label for="id_doctor" class="form-label">Doctor</label>
+            {{ form.doctor }}
+        </div>
+
+        <!-- Appointment Date (Dynamic) -->
+        <div class="mb-3">
+            <label for="id_appointment_date" class="form-label">Appointment Date</label>
+            {{ form.appointment_date }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Schedule Appointment</button>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/schedule_appointment.js' %}"></script>
+{% endblock %}

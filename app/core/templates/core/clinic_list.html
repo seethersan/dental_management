@@ -1,0 +1,48 @@
+<!-- core/templates/core/clinic_list.html -->
+{% extends "base.html" %}
+
+{% block title %}Clinics List{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Clinics List</h2>
+    
+    <!-- Show "Add New Clinic" button only if the user is logged in -->
+    {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'clinic-create' %}" class="btn btn-primary mb-3">Add New Clinic</a>
+    {% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Affiliated Doctors</th>
+                <th>Affiliated Patients</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for clinic in clinics %}
+            <tr>
+                <td>{{ clinic.name }}</td>
+                <td>{{ clinic.phone_number }}</td>
+                <td>{{ clinic.city }}</td>
+                <td>{{ clinic.state }}</td>
+                <td>{{ clinic.num_doctors }}</td>
+                <td>{{ clinic.num_patients }}</td>
+                <td>
+                    <a href="{% url 'clinic-detail' clinic.id %}" class="btn btn-info">View Details</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No clinics available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
