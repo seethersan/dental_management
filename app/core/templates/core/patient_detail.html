@@ -52,7 +52,7 @@
                     <h4 class="card-title">Visit History</h4>
                     {% if visits %}
                         {% for visit in visits %}
-                            <p><strong>Date:</strong> {{ visit.date }}</p>
+                            <p><strong>Date:</strong> {{ visit.visit_date }}</p>
                             <p><strong>Doctor:</strong> {{ visit.doctor.user.get_full_name }}</p>
                             <p><strong>Clinic:</strong> {{ visit.clinic.name }}</p>
                             <p><strong>Procedure:</strong> {{ visit.procedures_done.all|join:", " }}</p>
