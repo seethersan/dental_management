@@ -22,7 +22,7 @@ from .models import (
     State,
     City,
 )
-from django.db.models import Count
+from django.db.models import Count, Q, F
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import (
     ClinicForm,
@@ -76,35 +76,6 @@ class EditUserProfileView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class DoctorCreateView(CreateView):
-    model = Doctor
-    form_class = DoctorForm
-    template_name = "core/doctor_form.html"
-    success_url = reverse_lazy("doctor-list")
-
-    def form_valid(self, form):
-        username = form.cleaned_data["username"]
-        first_name = form.cleaned_data["first_name"]
-        last_name = form.cleaned_data["last_name"]
-        email = form.cleaned_data["email"]
-        password = form.cleaned_data["password"]
-
-        # Create the User object
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password,
-            first_name=first_name,
-            last_name=last_name,
-        )
-
-        # Assign the user to the doctor instance
-        form.instance.user = user
-
-        # You can also handle clinics here if necessary (like linking them programmatically)
-        return super().form_valid(form)
-
-
 class PatientListView(ListView):
     model = Patient
     template_name = "core/patient_list.html"
@@ -124,7 +95,7 @@ class PatientListView(ListView):
         return queryset
 
 
-class PatientCreateView(CreateView):
+class PatientCreateView(LoginRequiredMixin, CreateView):
     model = Patient
     form_class = PatientForm
     template_name = "core/patient_form.html"
@@ -157,7 +128,7 @@ class PatientCreateView(CreateView):
         return super().form_valid(form)
 
 
-class PatientDetailView(DetailView):
+class PatientDetailView(LoginRequiredMixin, DetailView):
     model = Patient
     template_name = "core/patient_detail.html"
     context_object_name = "patient"
@@ -175,7 +146,7 @@ class PatientDetailView(DetailView):
         return context
 
 
-class PatientUpdateView(UpdateView):
+class PatientUpdateView(LoginRequiredMixin, UpdateView):
     model = Patient
     form_class = PatientUpdateForm
     template_name = "core/patient_update.html"
@@ -194,7 +165,7 @@ class PatientUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ClinicListView(ListView):
+class ClinicListView(LoginRequiredMixin, ListView):
     model = Clinic
     template_name = "core/clinic_list.html"
     context_object_name = "clinics"
@@ -203,13 +174,15 @@ class ClinicListView(ListView):
         return Clinic.objects.annotate(
             num_doctors=Count("doctorclinicaffiliation__doctor", distinct=True),
             num_patients=Count(
-                "doctorclinicaffiliation__doctor__doctorpatientaffiliation__patient",
+                # Count distinct patients with either a visit or appointment to this clinic
+                "visit__patient", 
+                filter=Q(visit__clinic=F("pk")) | Q(appointment__clinic=F("pk")),
                 distinct=True,
-            ),
+            )
         )
 
 
-class ClinicDetailView(DetailView):
+class ClinicDetailView(LoginRequiredMixin, DetailView):
     model = Clinic
     template_name = "core/clinic_detail.html"
     context_object_name = "clinic"
@@ -244,7 +217,7 @@ class ClinicDetailView(DetailView):
         return context
 
 
-class ClinicUpdateView(UpdateView):
+class ClinicUpdateView(LoginRequiredMixin, UpdateView):
     model = Clinic
     form_class = ClinicUpdateForm
     template_name = "core/clinic_update.html"
@@ -270,7 +243,36 @@ class ClinicCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("clinic-list")
 
 
-class DoctorDetailView(DetailView):
+class DoctorCreateView(CreateView):
+    model = Doctor
+    form_class = DoctorForm
+    template_name = "core/doctor_form.html"
+    success_url = reverse_lazy("doctor-list")
+
+    def form_valid(self, form):
+        username = form.cleaned_data["username"]
+        first_name = form.cleaned_data["first_name"]
+        last_name = form.cleaned_data["last_name"]
+        email = form.cleaned_data["email"]
+        password = form.cleaned_data["password"]
+
+        # Create the User object
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+        )
+
+        # Assign the user to the doctor instance
+        form.instance.user = user
+
+        # You can also handle clinics here if necessary (like linking them programmatically)
+        return super().form_valid(form)
+
+
+class DoctorDetailView(LoginRequiredMixin, DetailView):
     model = Doctor
     template_name = "core/doctor_detail.html"
     context_object_name = "doctor"
@@ -282,7 +284,7 @@ class DoctorDetailView(DetailView):
         return context
 
 
-class DoctorUpdateView(UpdateView):
+class DoctorUpdateView(LoginRequiredMixin, UpdateView):
     model = Doctor
     form_class = DoctorUpdateForm
     template_name = "core/doctor_update.html"
