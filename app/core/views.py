@@ -232,7 +232,12 @@ class DoctorListView(ListView):
     def get_queryset(self):
         return Doctor.objects.annotate(
             num_clinics=Count("clinics", distinct=True),
-            num_patients=Count("doctorpatientaffiliation__patient", distinct=True),
+            num_patients=Count(
+                # Count distinct patients with either a visit or appointment to this clinic
+                "visit__patient",
+                filter=Q(visit__doctor=F("pk")) | Q(appointment__doctor=F("pk")),
+                distinct=True,
+            ),
         )
 
 
