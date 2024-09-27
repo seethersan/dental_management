@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <!-- Include the dynamic_locations.js -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+{% endblock %}
