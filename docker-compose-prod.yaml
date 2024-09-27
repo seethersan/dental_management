@@ -3,7 +3,6 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.prod
-    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -15,7 +14,7 @@ services:
       - db
 
   db:
-    image: postgres:15
+    image: postgres:16
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
