@@ -175,10 +175,10 @@ class ClinicListView(LoginRequiredMixin, ListView):
             num_doctors=Count("doctorclinicaffiliation__doctor", distinct=True),
             num_patients=Count(
                 # Count distinct patients with either a visit or appointment to this clinic
-                "visit__patient", 
+                "visit__patient",
                 filter=Q(visit__clinic=F("pk")) | Q(appointment__clinic=F("pk")),
                 distinct=True,
-            )
+            ),
         )
 
 
