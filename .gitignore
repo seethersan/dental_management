@@ -140,3 +140,4 @@ GitHub.sublime-settings
 .history
 .env.db.prod
 .env.dev
+k8s

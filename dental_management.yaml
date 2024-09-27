@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dental-management
+  labels:
+    app: dental-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: dental-management
+  template:
+    metadata:
+      labels:
+        name: dental-management
+    spec:
+      containers:
+        - name: dental-management
+          image: "seethersan/dental_management:${RELEASE_VERSION}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+          - secretRef:
+              name: dental-management-secrets
+---
+# START Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: dental-management
+  labels:
+    app: dental-management
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80 #port that the service exposes
+      targetPort: 8000 #port that the app is receiving requests from via the pod
+  selector:
+    name: dental-management
+# END SERVICE
