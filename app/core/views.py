@@ -165,6 +165,13 @@ class PatientUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+class ClinicCreateView(LoginRequiredMixin, CreateView):
+    model = Clinic
+    form_class = ClinicForm
+    template_name = "core/clinic_form.html"
+    success_url = reverse_lazy("clinic-list")
+
+
 class ClinicListView(LoginRequiredMixin, ListView):
     model = Clinic
     template_name = "core/clinic_list.html"
@@ -239,13 +246,6 @@ class DoctorListView(ListView):
                 distinct=True,
             ),
         )
-
-
-class ClinicCreateView(LoginRequiredMixin, CreateView):
-    model = Clinic
-    form_class = ClinicForm
-    template_name = "core/clinic_form.html"
-    success_url = reverse_lazy("clinic-list")
 
 
 class DoctorCreateView(CreateView):

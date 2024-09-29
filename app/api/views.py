@@ -3,6 +3,7 @@ from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from core.models import Patient, Doctor, Clinic
 from .serializers import PatientSerializer, DoctorSerializer, ClinicSerializer
 
+
 # Add a new patient (CBV)
 class AddPatientView(generics.CreateAPIView):
     queryset = Patient.objects.all()
